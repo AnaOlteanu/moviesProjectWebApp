@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Actor Info</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="margin-top: 50px">
+    <form th:object="${actorInfo}" th:action="@{/actor/contactInfo}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{actor}"/>
+
+        <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background-color:lightblue;">
+                    <h1 th:if="${id == null}" class="panel-title">Add Actor Info</h1>
+                    <h1 th:unless="${id == null}" class="panel-title">Edit Actor Info</h1>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label>Birthday:</label>
+                            <input type="date" class="form-control" th:field="*{dateOfBirth}" th:value="${actorInfo.dateOfBirth}"/>
+                            <span class="has-error" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+                        </div>
+<!--                        <div class="col-md-3 ">-->
+<!--                            <label class="control-label">Select Image File</label>-->
+<!--                            <input id="imagefile" name="imagefile" type="file" class="file">-->
+<!--                        </div>-->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 ">
+                            <select name="gender">
+                                <option th:each="gender : ${T(com.example.projectmovie.domain.Gender).values()}"
+                                        th:value="${gender}" th:text="${gender}"></option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <br>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-7 ml-md-auto">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="row">
+        <div class="col-md-6" >
+            <a class="btn btn-dark" role="button" th:href="@{/actor/{id}(id=${actorInfo.actor.id})}">Back to actor <span th:text="${actorInfo.actor.firstName + ' ' + actorInfo.actor.lastName}"></span></a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

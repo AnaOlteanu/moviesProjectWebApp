@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/plugins.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<div class="contain" style="height: 100%; overflow-x: hidden;">
+<div class="landing-hero">
+
+    <div class="row landing-hero-text">
+        <h2 class="text-yellow">MOVIES FOR YOU</h2>
+        <h2>Login if you have an account or register now!</h2>
+    </div>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST"><button class="redbtn"  type="submit">Logout</button></form>
+    <br>
+    <br>
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="redbtn" >Login</a>
+    <a th:href="@{/register}" class="yellowbtn" >Register</a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/movie/list}" class="redbtn" >Discover!</a>
+
+</div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins2.js}"></script>
+</body>
+</html>

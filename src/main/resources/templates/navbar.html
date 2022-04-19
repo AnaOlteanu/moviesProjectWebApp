@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NavBar</title>
+</head>
+<body>
+
+
+
+<header th:fragment="navbar"  class="ht-header">
+    <div class="container">
+        <nav class="navbar navbar-default navbar-custom" style="background-color: transparent;">
+
+            <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav flex-child-menu menu-left">
+
+                    <li><a th:href="@{/}">Home</a></li>
+                    <li><a th:href="@{/movie/list}">Movies</a></li>
+                    <li><a th:href="@{/actor/list}">Actors</a></li>
+                    <li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                            Genres <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                            <ul class="dropdown-menu level1">
+                                <li><a th:href="@{/genre/list}"> All genres</a> </li>
+                                <li><a th:each="genre,iterStat : ${genres}" th:if="${iterStat.index}<3" th:href="@{/movie/(genre=${genre.name})}" th:text="${genre.name}"></a></li>
+                            </ul>
+
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+
+</header>
+
+</body>
+</html>

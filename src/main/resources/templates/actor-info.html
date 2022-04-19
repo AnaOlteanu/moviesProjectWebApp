@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Actor Info</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<body>
+
+
+
+<div class="container" style="margin-top: 50px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="pannel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="background-color:lightblue;">
+                        <h1 class="panel-title" th:text="${actor.firstName + ' ' +  actor.lastName}">Movie</h1>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>Birthday:</h6>
+                                </div>
+                                <div class="col-md-12">
+                                    <p th:text="${actor.contactInfo != null ? actor.contactInfo.dateOfBirth :''}">
+                                        Birthday
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>Gender:</h6>
+                                </div>
+                                <div class="col-md-1">
+
+                                    <div th:if="${actor.contactInfo != null} and ${actor.contactInfo.gender == T(com.example.projectmovie.domain.Gender).F}">
+                                        Female
+                                    </div>
+                                    <div th:if="${actor.contactInfo != null} and ${actor.contactInfo.gender == T(com.example.projectmovie.domain.Gender).M}">
+                                        Male
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>Movies:</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li th:each="movie:${actor.movies}"th:text="${movie.title}">
+                                            movies
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" th:if="${actor.contactInfo} == null">
+            <a sec:authorize="hasRole('ADMIN')" class="btn btn-outline-warning" role="button" th:href="@{/actor/contactInfo/{id}(id=${actor.id})}">Add actor info</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-4" th:if="${actor.contactInfo} != null">
+            <a class="btn btn-outline-info" role="button" th:href="@{/actor/editContactInfo/{id}(id=${actor.contactInfo.id})}">Update actor info</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-4">
+            <a class="btn btn-outline-danger" role="button" th:href="@{/actor/delete/{id}(id=${actor.id})}">Delete actor</a>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6" >
+            <a class="btn btn-dark" role="button" th:href="@{/actor/list}">Back to actors list</a>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

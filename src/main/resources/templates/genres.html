@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Genres List</title>
+
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/plugins.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+<div th:insert="navbar :: navbar"> </div>
+
+<div class="buster-light">
+<div class="hero common-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero-ct">
+                    <h1> genres listing - list</h1>
+                    <ul class="breadcumb">
+                        <li class="active"><a th:href="@{/index}">Home</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span> genres listing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page-single movie_list">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="topbar-filter">
+                    <p>Found <span th:text="|${genres.size()} genres|"></span> in total</p>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/genre/new}"><h6>Add new genre  </h6>  </a>
+                </div>
+                <div class="movie-item-style-2" th:each="genre: ${genres}">
+                    <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" alt="">
+                    <div class="mv-item-infor">
+                        <h6><a th:href="@{/movie/(genre=${genre.name})}" th:text="${genre.name}"></a></h6>
+                        <div sec:authorize="hasRole('ADMIN')" class="mv-item-infor">
+                            <p><a th:href="@{/genre/edit/{id}(id=${genre.id})}">Edit genre</a></p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins2.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Info</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+<body>
+
+
+
+<div class="container" style="margin-top: 50px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="pannel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="background-color:lightblue;">
+                        <h1 class="panel-title" th:text="${movie.title}">Movie</h1>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>Description:</h6>
+                                </div>
+                                <div class="col-md-12">
+                                    <p th:text="${movie.movieInfo != null ? movie.movieInfo.description:''}">
+                                        Description
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>Genres:</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li th:each="genre:${movie.genres}"th:text="${genre.getName()}">
+                                        genres
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h6>Actors:</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li th:each="actor:${movie.actors}"th:text="${actor.getFirstName() + ' ' + actor.getLastName()}">
+                                            genres
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>Run Time (min):</h6>
+                            </div>
+                            <div class="col-md-1">
+                                <p th:text="${movie.movieInfo != null ? movie.movieInfo.length:' '}">
+                                    Run Time </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>Movie Type:</h6>
+                            </div>
+                            <div class="col-md-1">
+
+                                <div th:if="${movie.movieInfo != null} and ${movie.movieInfo.movieType == T(com.example.projectmovie.domain.MovieType).LONG}">
+                                    Long
+                                </div>
+                                <div th:if="${movie.movieInfo != null} and ${movie.movieInfo.movieType == T(com.example.projectmovie.domain.MovieType).SHORT}">
+                                    Short
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="container">
+    <div class="row">
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-2">
+            <a class="btn btn-outline-secondary" role="button" th:href="@{/movie/edit/{id}(id=${movie.id})}">Edit</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-2" th:if="${movie.movieInfo} == null">
+            <a class="btn btn-outline-warning" role="button" th:href="@{/movie/movieInfo/{title}(title=${movie.getTitle()})}">Add movie info</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-2" th:if="${movie.movieInfo} != null">
+            <a class="btn btn-outline-info" role="button" th:href="@{/movie/movieInfoEdit/{id}(id=${movie.movieInfo.id})}">Edit movie info</a>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-outline-info" role="button" th:href="@{/movie/editGenres/{id}(id=${movie.id})}">Edit genres</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-2">
+            <a  class="btn btn-outline-danger" role="button" th:href="@{/movie/delete/{id}(id=${movie.id})}">Delete movie</a>
+        </div>
+
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6" >
+            <a class="btn btn-dark" role="button" th:href="@{/movie/list}">Back to movie list</a>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

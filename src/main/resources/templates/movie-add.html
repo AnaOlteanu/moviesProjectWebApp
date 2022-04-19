@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Add</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<body>
+
+
+<div class="container" style="margin-top: 50px">
+<form th:object="${movie}" th:action="@{/movie/}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}"/>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="background-color: lightblue;">
+                <h1 th:if="${id == null}" class="panel-title">Add a new movie</h1>
+                <h1 th:unless="${id == null}" class="panel-title">Edit movie</h1>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Movie title:</label>
+                        <input type="text" class="form-control" th:field="*{title}"/>
+                        <span class="has-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Release date:</label>
+                        <input type="date" class="form-control" th:field="*{releaseDate}">
+                        <span class="has-error" th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label th:for="genres" class="col-form-label col-sm-4">Genres:</label>
+                    <div class="col-sm-8 text-left">
+                        <th:block  th:each="genre : ${genresAll}">
+                            <div>
+                                <input type="checkbox" th:field="*{genres}"  th:value="${genre.id}" class="m-2">
+                                <label
+                                        th:for="${#ids.prev('genres')}"
+                                        th:text="${genre.name}">
+                                </label>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label th:for="actors" class="col-form-label col-sm-4">Actors:</label>
+                    <div class="col-sm-8 text-left">
+                        <th:block  th:each="actor : ${actorsAll}">
+                            <div>
+                                <input type="checkbox" th:field="*{actors}"  th:value="${actor.id}" class="m-2">
+                                <label
+                                        th:for="${#ids.prev('actors')}"
+                                        th:text="${actor.firstName + ' ' + actor.lastName}">
+                                </label>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-7 ml-md-auto">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+</div>
+
+
+
+</body>
+</html>

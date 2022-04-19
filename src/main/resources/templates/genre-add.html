@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genre</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="margin-top: 50px">
+    <form th:object="${genre}" th:action="@{/genre/}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background-color:lightblue;">
+                    <h1 th:if="${id == null}" class="panel-title">Add a new genre</h1>
+                    <h1 th:unless="${id == null}" class="panel-title">Edit genre</h1>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label>Genre name:</label>
+                            <input type="text" class="form-control" th:field="*{name}" th:value="${genre.name}"/>
+                            <span class="has-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-7 ml-md-auto">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="row">
+        <div class="col-md-6" >
+            <a class="btn btn-dark" role="button" th:href="@{/genre/list}">Back to genres</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

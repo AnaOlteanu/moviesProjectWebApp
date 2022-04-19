@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Actor Add</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<body>
+
+
+<div class="container" style="margin-top: 50px">
+<form th:object="${actor}" th:action="@{/actor/}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}"/>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="background-color: lightblue;">
+                <h1 th:if="${id == null}" class="panel-title">Add new Actor</h1>
+                <h1 th:unless="${id == null}" class="panel-title">Edit Actor</h1>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Actor first name:</label>
+                        <input type="text" class="form-control" th:field="*{firstName}"/>
+                        <span class="has-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Actor last name:</label>
+                        <input type="text" class="form-control" th:field="*{lastName}"/>
+                        <span class="has-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="row">
+                    <div class="col-md-7 ml-md-auto">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+</form>
+
+    <div class="row">
+        <div class="col-md-6" >
+            <a class="btn btn-dark" role="button" th:href="@{/actor/list}">Back to actors</a>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

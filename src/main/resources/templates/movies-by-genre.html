@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies By Genre</title>
+
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/plugins.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+<div th:insert="navbar :: navbar"> </div>
+
+
+<div class="hero common-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero-ct">
+                    <h1> movie listing by genre</h1>
+                    <ul class="breadcumb">
+                        <li class="active"><a th:href="@{/index}">Home</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span> movies by genre<span th:text="${genre}"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="buster-light">
+<div class="page-single movie_list">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="topbar-filter">
+                    <p>Found <span th:text="|${movies.size()} movies|"></span> in total</p>
+
+                </div>
+                <div class="movie-item-style-2" th:each="movie: ${movies}">
+                    <img th:if="${movie.movieInfo != null and movie.movieInfo.image != null}"  th:src="@{'/movie/image/' + ${movie.id}}" >
+                    <img th:unless="${movie.movieInfo != null and movie.movieInfo.image != null}" src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" >
+                    <div class="mv-item-infor">
+                        <h6><a th:href="@{/movie/{id}(id=${movie.id})}" th:text="${movie.title}"></a></h6>
+                        <p class="describe" th:if="${movie.movieInfo != null}"  th:text="${movie.movieInfo.description}"></p>
+                        <p class="run-time"> Run Time: <span th:if="${movie.movieInfo != null}" th:text="${movie.movieInfo.length}"></span> . <span th:text="|Release : ${movie.releaseDate}|"></span></p>
+                        <p th:if="${movie.actors != null}">Stars:
+                            <a th:href="@{/actor/{id}(id=${actor.id})}" th:each="actor: ${movie.actors}" th:text="${actor.firstName + ' '+ actor.lastName + ' '}">
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins2.js}"></script>
+
+</body>
+</html>
