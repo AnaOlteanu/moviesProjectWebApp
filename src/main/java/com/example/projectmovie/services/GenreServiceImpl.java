@@ -3,6 +3,7 @@ package com.example.projectmovie.services;
 import com.example.projectmovie.domain.Genre;
 import com.example.projectmovie.exception.NotFoundException;
 import com.example.projectmovie.repositories.GenreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class GenreServiceImpl implements GenreService{
     GenreRepository genreRepository;
 
@@ -38,6 +40,8 @@ public class GenreServiceImpl implements GenreService{
 
     @Override
     public Genre save(Genre genre) {
-        return genreRepository.save(genre);
+        Genre savedGenre = genreRepository.save(genre);
+        log.info("Save genre {} ", savedGenre);
+        return savedGenre;
     }
 }

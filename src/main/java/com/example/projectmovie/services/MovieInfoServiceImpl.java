@@ -5,12 +5,14 @@ import com.example.projectmovie.domain.MovieInfo;
 import com.example.projectmovie.exception.NotFoundException;
 import com.example.projectmovie.repositories.MovieInfoRepository;
 import com.example.projectmovie.repositories.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MovieInfoServiceImpl implements MovieInfoService{
     MovieInfoRepository movieInfoRepository;
 
@@ -21,7 +23,9 @@ public class MovieInfoServiceImpl implements MovieInfoService{
 
     @Override
     public MovieInfo save(MovieInfo movieInfo) {
-        return movieInfoRepository.save(movieInfo);
+        MovieInfo savedMovieInfo = movieInfoRepository.save(movieInfo);
+        log.info("Save movie info {} ", savedMovieInfo);
+        return savedMovieInfo;
     }
 
     @Override

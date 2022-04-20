@@ -29,6 +29,7 @@ public class SecurityJdbcConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/movie/delete/*", "/actor/delete/*", "/movie/movieInfoEdit/*",
                         "/genre/edit/*", "/actor/editContactInfo/*", "/movie/edit/*").hasRole("ADMIN")
                 .antMatchers("/movie/*", "/actor/*", "/movie/editGenres/*", "/genre/*").hasAnyRole("ADMIN", "GUEST")
+                .antMatchers("/movieSort/*").hasAnyRole("ADMIN", "GUEST")
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/movie/list")

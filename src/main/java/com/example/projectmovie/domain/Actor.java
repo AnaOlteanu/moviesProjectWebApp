@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Actor {
@@ -28,9 +29,11 @@ public class Actor {
 
     @OneToOne(mappedBy = "actor",
             cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private ContactInfo contactInfo;
 
     @ManyToMany(mappedBy = "actors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ToString.Exclude
     private List<Movie> movies;
 
 

@@ -5,6 +5,7 @@ import com.example.projectmovie.domain.Actor;
 import com.example.projectmovie.domain.Genre;
 import com.example.projectmovie.domain.Movie;
 import com.example.projectmovie.services.GenreService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class GenreController {
 
     @Autowired
@@ -44,6 +46,7 @@ public class GenreController {
     @PostMapping("/genre")
     public String addNewGenre(@Valid @ModelAttribute Genre genre, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
+            log.info("Error during adding genre {} ", bindingResult.getFieldErrors());
             return "genre-add";
         }
         genreService.save(genre);

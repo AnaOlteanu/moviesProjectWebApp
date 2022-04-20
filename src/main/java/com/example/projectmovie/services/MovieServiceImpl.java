@@ -6,6 +6,7 @@ import com.example.projectmovie.exception.NotFoundException;
 import com.example.projectmovie.repositories.GenreRepository;
 import com.example.projectmovie.repositories.MovieInfoRepository;
 import com.example.projectmovie.repositories.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.*;
 
 
 @Service
+@Slf4j
 public class MovieServiceImpl implements MovieService {
 
     MovieRepository movieRepository;
@@ -30,9 +32,17 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie save(Movie movie) {
+        Movie savedMovie = movieRepository.save(movie);
+        log.info("Save movie {}", savedMovie);
+        return savedMovie;
+    }
+
+    @Override
     public List<Movie> findAll() {
         List<Movie> movies = new LinkedList<>();
         movieRepository.findAll().iterator().forEachRemaining(movies::add);
+        log.info("Retrieve all movies: {}", movies);
         return movies;
     }
 
@@ -43,7 +53,6 @@ public class MovieServiceImpl implements MovieService {
         int pageSize = pageable.getPageSize();
         int startItem = currentPage * pageSize;
         List<Movie> movieList;
-
         if(movies.size() < startItem){
             movieList = Collections.emptyList();
         } else {
@@ -59,17 +68,14 @@ public class MovieServiceImpl implements MovieService {
     public Movie findById(Long id) {
         Optional<Movie> movieOptional = movieRepository.findById(id);
         if(movieOptional.isPresent()){
+            log.info("Movie with id {} found", id);
             return movieOptional.get();
         } else {
+            log.info("Movie with id {} not found", id);
             throw new NotFoundException("Movie with id " + id + " not found");
         }
     }
 
-    @Override
-    public Movie save(Movie movie) {
-        Movie savedMovie = movieRepository.save(movie);
-        return savedMovie;
-    }
 
     @Override
     public void deleteById(Long id) {
@@ -92,7 +98,7 @@ public class MovieServiceImpl implements MovieService {
         for(Actor actor : actors){
             movie.removeActor(actor);
         }
-
+        log.info("Movie with id {} was deleted", id);
          movieRepository.save(movie);
          movieRepository.deleteById(id);
     }
@@ -100,9 +106,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie findByTitle(String title) {
         Optional<Movie> movieOptional = movieRepository.findByTitle(title);
+
         if(movieOptional.isEmpty()){
              throw new NotFoundException("Movie with title " + title + " not found");
         }
+        log.info("Movie with title {} found", title);
         return movieOptional.get();
     }
 
@@ -113,6 +121,7 @@ public class MovieServiceImpl implements MovieService {
             throw new NotFoundException("Genre with name " + genreName + " not found");
         }
         List<Movie> movies = genreOptional.get().getMovies();
+        log.info("Movies with genre {} are: {}", genreName, movies);
         return movies;
     }
 

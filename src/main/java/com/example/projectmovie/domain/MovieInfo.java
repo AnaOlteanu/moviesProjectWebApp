@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "movie_info")
 public class MovieInfo {
 
@@ -31,6 +32,7 @@ public class MovieInfo {
     private Byte[] image;
 
     @OneToOne
+    @ToString.Exclude
     private Movie movie;
 
     public void removeMovie(Movie movie) {

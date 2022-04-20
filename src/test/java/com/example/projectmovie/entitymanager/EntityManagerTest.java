@@ -39,7 +39,8 @@ public class EntityManagerTest {
     @Test
     public void updateActor(){
         Actor actor = entityManager.find(Actor.class, 1l);
-        actor.setLastName("ana");
+        actor.setLastName("olteanu");
+        actor.setFirstName("ana");
         entityManager.persist(actor);
         entityManager.flush();
     }

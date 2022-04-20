@@ -7,12 +7,14 @@ import com.example.projectmovie.domain.MovieInfo;
 import com.example.projectmovie.exception.NotFoundException;
 import com.example.projectmovie.repositories.ActorRepository;
 import com.example.projectmovie.repositories.ContactInfoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ContactInfoServiceImpl implements ContactInfoService{
 
     ContactInfoRepository contactInfoRepository;
@@ -24,7 +26,9 @@ public class ContactInfoServiceImpl implements ContactInfoService{
 
     @Override
     public ContactInfo save(ContactInfo actorInfo) {
-        return contactInfoRepository.save(actorInfo);
+        ContactInfo savedActorInfo = contactInfoRepository.save(actorInfo);
+        log.info("Save contact info {} ", savedActorInfo);
+        return savedActorInfo;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class ContactInfoServiceImpl implements ContactInfoService{
         ContactInfo contactInfo = contactInfoOptional.get();
         Actor actor = contactInfo.getActor();
         contactInfo.removeActor(actor);
-
+        log.info("Delete contact info with id {} ", id);
         contactInfoRepository.save(contactInfo);
         contactInfoRepository.deleteById(id);
     }
@@ -45,8 +49,10 @@ public class ContactInfoServiceImpl implements ContactInfoService{
     public ContactInfo findById(Long id) {
         Optional<ContactInfo> contactInfoOptional = contactInfoRepository.findById(id);
         if(!contactInfoOptional.isPresent()){
+            log.info("Contact info with id {} not found", id);
             throw new NotFoundException("Actor info with id " + id + " not found!");
         }
+        log.info("Contact info with id {} found", id);
         return contactInfoOptional.get();
     }
 }

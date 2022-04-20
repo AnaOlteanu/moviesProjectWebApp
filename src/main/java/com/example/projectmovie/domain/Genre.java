@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Genre {
 
@@ -22,6 +23,7 @@ public class Genre {
 
     @ManyToMany(mappedBy = "genres",
         cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ToString.Exclude
     private List<Movie> movies;
 
     public Genre(Long genreId, String name) {

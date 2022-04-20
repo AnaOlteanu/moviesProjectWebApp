@@ -33,13 +33,12 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         if(userOptional.isPresent()){
             user = userOptional.get();
-            log.info("userOptional {} ", userOptional.get());
         } else{
-            log.info("userOptional does not exist");
+            log.info("User {} does not exist", username);
             throw new UsernameNotFoundException("Username: " + username);
         }
 
-        log.info("User is {} pass {}", user.getUsername(), user.getPassword());
+        log.info("User is {} with password {}", user.getUsername(), user.getPassword());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), user.getEnabled(), user.getAccountNotExpired(),

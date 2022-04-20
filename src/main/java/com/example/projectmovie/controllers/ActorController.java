@@ -3,6 +3,7 @@ package com.example.projectmovie.controllers;
 import com.example.projectmovie.domain.*;
 import com.example.projectmovie.repositories.ActorRepository;
 import com.example.projectmovie.services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class ActorController {
 
     @Autowired
@@ -58,6 +60,7 @@ public class ActorController {
                             BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
+            log.info("Error during adding actor: {} ", bindingResult.getFieldErrors());
             return "actor-add";
         }
 
@@ -77,7 +80,6 @@ public class ActorController {
     @GetMapping("/actor/{id}")
     public String retrieveActorById(@PathVariable long id, Model model){
         model.addAttribute("actor", actorService.findById(id));
-
         return "actor-info";
     }
 
@@ -106,6 +108,7 @@ public class ActorController {
                              ){
 
         if(bindingResult.hasErrors()){
+            log.info("Error during adding actor info {} ", bindingResult.getFieldErrors());
             return "actor-info-add";
         }
 

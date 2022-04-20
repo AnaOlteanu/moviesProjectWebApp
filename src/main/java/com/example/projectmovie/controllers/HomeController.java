@@ -18,13 +18,9 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-
     @GetMapping({"", "/", "/index"})
     public String getWelcomePage(){
         return "index";
     }
-
-
-
 
 }

@@ -2,6 +2,7 @@ package com.example.projectmovie.controllers;
 
 import com.example.projectmovie.domain.security.User;
 import com.example.projectmovie.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -35,6 +37,7 @@ public class UserController {
     public String register(@ModelAttribute @Valid User user,
                            BindingResult bindingResult){
         if(bindingResult.hasErrors()){
+            log.info("Error during register {}", bindingResult.getFieldErrors());
             return "register";
         }
 

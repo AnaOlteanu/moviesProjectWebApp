@@ -4,6 +4,7 @@ import com.example.projectmovie.domain.security.Authority;
 import com.example.projectmovie.domain.security.User;
 import com.example.projectmovie.repositories.AuthorityRepository;
 import com.example.projectmovie.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService{
         Authority guestRole = authorityRepository.save(Authority.builder().role("ROLE_GUEST").build());
         authoritySet.add(guestRole);
         user.setAuthorities(authoritySet);
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return savedUser;
     }
 }

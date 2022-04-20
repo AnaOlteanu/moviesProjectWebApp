@@ -57,7 +57,7 @@ public class MovieRepositoryTest {
     @ParameterizedTest
     @Order(3)
     @ValueSource(longs = {10})
-    public void findMovieById(long id){
+    public void findMovieByIdNotFound(long id){
         Optional<Movie> optionalMovie = movieRepository.findById(id);
         assertTrue(optionalMovie.isEmpty());
     }

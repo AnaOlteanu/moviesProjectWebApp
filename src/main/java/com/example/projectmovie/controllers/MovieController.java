@@ -93,6 +93,7 @@ public class MovieController {
                             Model model
                             ){
         if(bindingResult.hasErrors()){
+            log.info("Error during adding movie {} ", bindingResult.getFieldErrors());
             List<Genre> genresAll = genreService.findAll();
             List<Actor> actorsAll = actorService.findAll();
 
@@ -143,6 +144,7 @@ public class MovieController {
                                @RequestParam("imagefile") MultipartFile file){
 
         if(bindingResult.hasErrors()){
+            log.info("Error during adding movie info {} ", bindingResult.getFieldErrors());
             return "movie-info-add";
         }
 
@@ -183,6 +185,7 @@ public class MovieController {
                                   BindingResult bindingResult,
                                   @PathVariable Long id){
         if(bindingResult.hasErrors()){
+            log.info("Error during editing genres for movie {} ", bindingResult.getFieldErrors());
             return "movie-genre-edit";
         }
 
@@ -208,7 +211,6 @@ public class MovieController {
         modelAndView.addObject("movies", moviePage);
         modelAndView.addObject("currentPage", currentPage);
         modelAndView.addObject("sorting", true);
-        log.info(moviePage.toString());
         return modelAndView;
     }
 }
