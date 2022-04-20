@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,6 +55,8 @@ public class MovieController {
         modelAndView.addObject("genres",genres);
         Page<Movie> moviePage = movieService.findAllPaginated(PageRequest.of(currentPage - 1, pageSize));
         modelAndView.addObject("movies", moviePage);
+        modelAndView.addObject("currentPage", currentPage);
+        modelAndView.addObject("sorting", false);
         return modelAndView;
     }
 
@@ -191,4 +195,20 @@ public class MovieController {
         return "redirect:/movie/" + id;
     }
 
+    @GetMapping("/movieSort")
+    public ModelAndView sortMovies(@RequestParam("sortBy") String sortItem,
+                             @RequestParam("page") Optional<Integer> page,
+                             @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(4);
+        List<Genre> genres = genreService.findAll();
+        ModelAndView modelAndView = new ModelAndView("movies");
+        modelAndView.addObject("genres", genres);
+        Page<Movie> moviePage = movieService.findAllSortedPaginated(PageRequest.of(currentPage - 1, pageSize, Sort.by(sortItem)));
+        modelAndView.addObject("movies", moviePage);
+        modelAndView.addObject("currentPage", currentPage);
+        modelAndView.addObject("sorting", true);
+        log.info(moviePage.toString());
+        return modelAndView;
+    }
 }
