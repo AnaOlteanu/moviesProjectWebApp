@@ -13,7 +13,7 @@ Master's project designed to showcase the implementation of a web application us
     - template engine for front-end development
 - **MySQL**
     - relational database for data storage
-    - MySQL Worrkbench as the administration tool for the database
+    - MySQL Workbench as the administration tool for the database
 ## Features
 1. **Movie management**
    - attributes: _title, release date, genres, actors, description, movie type, length, image_
